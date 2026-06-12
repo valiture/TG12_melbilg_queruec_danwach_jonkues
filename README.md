@@ -1,6 +1,7 @@
-# Snake-Template
+# Snake-Template  
 Vorgabe für Snake Projekt
 
-**Prozessmanagement**
+**Prozessmanagement-Links**  
 
-Hugo ist nett
+* [Präsentation eduScrum](https://keynotes.mezmedia.de/PM-eduScrum/index.html#0)
+* [Projektdurchführung mit Scrum](https://mezmedia.de/projektmanagement/1-1-projektdurchfuehrung/)
