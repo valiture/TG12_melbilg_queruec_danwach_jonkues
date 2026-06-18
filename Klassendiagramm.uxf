@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>240</x>
+      <y>790</y>
+      <w>290</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>GUI_Snake_Portal
+--
+...
+--
++anzeigenText(pText:Text)
++anzeigenAuswahlSpiele(spielerID:GZ)
++anzeigenSpiel(name:Text,schwierigkeit:GZ)
++anzeigenHighscore(highscore:GZ)
++clickLogin(name:Text,pswd:Text)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>220</x>
+      <y>50</y>
+      <w>330</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>Steuerung
+--
+-anzSpieler:GZ
+-anzSpiele:GZ
+-anzHighscores:GZ
+-aktSpielerID:GZ
+-aktSpielID:GZ
+--
+-getIndexHighscore(spielerID:GZ,spielID:GZ):GZ
+-anzeigenAuswahlSpiele(spielerID:GZ)
++login(name:Text,pswd:Text)
+-getIDSpieler(name:Text,pswd:Text):GZ
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>90</x>
+      <y>360</y>
+      <w>290</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Spieler
+--
+-id:GZ
+-name:Text
+-pswd:Text
+_-spielerNr:GZ_
+--
++Spieler(name:Text,pswd:Text)
++checkLogin(name:Text,pswd:Text):Boolean
++getID():GZ</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>330</y>
+      <w>280</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>SnakeSpiel{abstract}
+--
+-id:GZ
+-name:Text
+-schwierigkeit:GZ
+_-spielerNr:GZ_
+--
++SnakeSpiel(name:Text,schwierigkeit:GZ)
++getSpielID():GZ
++getSpielName():Text
++getSchwierigkeit():GZ</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>170</x>
+      <y>590</y>
+      <w>330</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Highscore
+--
+-spielerID:GZ
+-spielID:GZ
+-highscore:GZ
+--
++Highscore(spielerID:GZ,spielID:GZ,highscore:GZ)
++getHighscore():GZ</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
