@@ -1,7 +1,9 @@
-public class Spielfeld {
+import javax.swing.*;
+
+public class Spielfeld extends JPanel{
     private int breite;
     private int hoehe;
-
+    private int feldSize = 20;
     public Spielfeld(int breite, int hoehe) {
         this.breite = breite;
         this.hoehe = hoehe;

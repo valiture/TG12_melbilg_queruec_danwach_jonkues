@@ -1,8 +1,12 @@
 public class Steuerung {
     private int anzSpieler;
+
     private int anzSpiele;
+
     private int anzHighscores;
+
     private int aktSpielerID;
+
     private int aktSpielID;
 
     private int getIndexHighscore(int spielerID, int spielID) {
