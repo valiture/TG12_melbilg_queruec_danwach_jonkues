@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import java.util.Random;
 
 public class Spielfeld {
     public PApplet app;
@@ -9,6 +10,7 @@ public class Spielfeld {
     public int DARK_G; //
     public int LIGHT_G;  //app.color(170, 215, 81);
     public int kopfZelle_color; //app.color(110, 103, 103);
+    private Zelle frucht;
 
     Zelle kopfZelle;
     public Spielfeld(PApplet app) {
@@ -35,5 +37,5 @@ public class Spielfeld {
             }
         }
     }
-
+    
 }
