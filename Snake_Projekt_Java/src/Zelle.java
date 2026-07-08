@@ -2,12 +2,16 @@ import processing.core.PApplet;
 
 class Zelle {
     PApplet app = new PApplet();
-
     private int x;
     private int y;
-    private int extent;
+    public int extent;
     private int farbe;
-    int letzteRichtung = 3;
+    public static final int UP = 0;
+    public static final int DOWN = 1;
+    public static final int LEFT = 2;
+    public static final int RIGHT = 3;
+    public int richtung = RIGHT;
+    public int lastRichtung;
 
     public Zelle(PApplet app,int x, int y, int extent, int farbe) {
         this.app = app;
@@ -33,6 +37,32 @@ class Zelle {
         app.square(x,y,extent);
     }
 
+    public void setRichtung(int richtung) {
+        this.richtung = richtung;
+    }
+    public int getRichtung() {
+        return richtung;
+    }
+
+    void move() {
+        switch (richtung) {
+            case 0:
+                y -= extent;
+                break;
+            case 1:
+                y += extent;
+                break;
+            case 2:
+                x -= extent;
+                break;
+            case 3:
+                x += extent;
+                break;
+        }
+    }
+
+
+    /*
     void moveUp() {
         if(letzteRichtung != 1) {
             setY(extent*((y/extent)-1));
@@ -57,8 +87,6 @@ class Zelle {
             letzteRichtung = 3;
         }
     }
-
-
-
+     */
 
 }
