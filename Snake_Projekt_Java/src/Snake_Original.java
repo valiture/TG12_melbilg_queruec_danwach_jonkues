@@ -45,14 +45,14 @@ public class Snake_Original extends PApplet{
         if (gameStart)  {
             spielfeld.generateField();
             spielfeld.getScoreboard().draw();
-
             if (millis() - lastMoveTime >= moveTime) {
                     checkVerloren();
-                    spielfeld.kopfZelle.move();
+                    spielfeld.moveSnake();
                     lastMoveTime = millis();
             }
         }
         if (gameOver) {
+            spielfeld.resetSnake();
             background(255);
         }
         /*stroke(255, 0, 0);
@@ -62,7 +62,8 @@ public class Snake_Original extends PApplet{
         */
     }
     public void checkVerloren() {
-        if((spielfeld.kopfZelle.getX()) > (spielfeld.fieldExtent*spielfeld.extent) || (spielfeld.kopfZelle.getY()) > (spielfeld.fieldExtent*spielfeld.extent)) {
+        if(spielfeld.kopfZelle.getX() >= spielfeld.fieldExtent*spielfeld.extent || spielfeld.kopfZelle.getX() <= 0 ||
+        (spielfeld.kopfZelle.getY()) >= spielfeld.fieldExtent*spielfeld.extent || spielfeld.kopfZelle.getY() <= 0) {
             gameStart = false;
             gameOver = true;
         }
@@ -73,18 +74,30 @@ public class Snake_Original extends PApplet{
             if(keyCode == UP && spielfeld.kopfZelle.lastRichtung != Zelle.DOWN){
                 spielfeld.kopfZelle.lastRichtung = Zelle.UP;
                 spielfeld.kopfZelle.setRichtung(Zelle.UP);
+                for (int i = 0; i < spielfeld.bodyCnt; i++) {
+                    spielfeld.kopfZelle.setRichtung(Zelle.UP);
+                }
             }
             if(keyCode == DOWN && spielfeld.kopfZelle.lastRichtung != Zelle.UP){
                 spielfeld.kopfZelle.lastRichtung = Zelle.DOWN;
                 spielfeld.kopfZelle.setRichtung(Zelle.DOWN);
+                for (int i = 0; i < spielfeld.bodyCnt; i++) {
+                    spielfeld.kopfZelle.setRichtung(Zelle.DOWN);
+                }
             }
             if(keyCode == LEFT && spielfeld.kopfZelle.lastRichtung != Zelle.RIGHT){
                 spielfeld.kopfZelle.lastRichtung = Zelle.LEFT;
                 spielfeld.kopfZelle.setRichtung(Zelle.LEFT);
+                for (int i = 0; i < spielfeld.bodyCnt; i++) {
+                    spielfeld.kopfZelle.setRichtung(Zelle.LEFT);
+                }
             }
             if(keyCode == RIGHT && spielfeld.kopfZelle.lastRichtung != Zelle.LEFT){
                 spielfeld.kopfZelle.lastRichtung = Zelle.RIGHT;
                 spielfeld.kopfZelle.setRichtung(Zelle.RIGHT);
+                for (int i = 0; i < spielfeld.bodyCnt; i++) {
+                    spielfeld.kopfZelle.setRichtung(Zelle.RIGHT);
+                }
             }
         }
         if (key == ENTER) {

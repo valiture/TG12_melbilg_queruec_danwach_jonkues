@@ -10,8 +10,8 @@ class Zelle {
     public static final int DOWN = 1;
     public static final int LEFT = 2;
     public static final int RIGHT = 3;
-    public int richtung = RIGHT;
-    public int lastRichtung;
+    public int richtung;
+    public int lastRichtung = RIGHT;
 
     public Zelle(PApplet app,int x, int y, int extent, int farbe) {
         this.app = app;
@@ -60,6 +60,7 @@ class Zelle {
                 break;
         }
     }
+
 
 
     /*

@@ -14,6 +14,7 @@ public class Spielfeld {
     public int kopfZelle_color; //app.color(110, 103, 103);
     private Zelle frucht;
     private Scoreboard scoreboard;
+    int bodyCnt;
 
     Zelle kopfZelle;
     public Spielfeld(PApplet app) {
@@ -23,10 +24,14 @@ public class Spielfeld {
         this.app = app;
         DARK_G = app.color(162, 209, 73);
         kopfZelle_color = app.color(110,103,103);
+        int body_Color = app.color(145, 137, 137);
         kopfZelle = new Zelle(app, (int) ((fieldExtent*extent)/2.0), (int) ((fieldExtent*extent)/2.0), extent, kopfZelle_color);
 
         scoreboard = new Scoreboard(app);
-
+        bodyCnt = 2;
+        for(int i = 0; i < bodyCnt; i++) {
+            snakeBody[i] = new Zelle(app, (kopfZelle.getX()-extent*i+1), kopfZelle.getY(), extent, body_Color);
+        }
         for(int i = 0; i < fieldExtent; i++) {
             for(int j = 0; j < fieldExtent; j++) {
                 zellArray[j][i] = new Zelle(app,j*extent, i*extent, extent, DARK_G);
@@ -42,18 +47,43 @@ public class Spielfeld {
 
     Zelle[][] zellArray = new Zelle[fieldExtent][fieldExtent];
     void generateField() {
-        kopfZelle.setX((int) ((fieldExtent*extent)/2.0));
-        kopfZelle.setY((int) ((fieldExtent*extent)/2.0));
-        for(int i = 0; i < fieldExtent; i++) {
-            for(int j = 0; j < fieldExtent; j++) {
+        for (int i = 0; i < fieldExtent; i++) {
+            for (int j = 0; j < fieldExtent; j++) {
                 app.rectMode(PConstants.CORNER);
                 zellArray[j][i].drawSquare();
-                if((j*extent) == kopfZelle.getX() && (i*extent) == kopfZelle.getY()) {
-                    kopfZelle.drawSquare();
-                }
+
             }
         }
+        kopfZelle.drawSquare();
+        snakeBody[0].drawSquare();
+        snakeBody[1].drawSquare();
     }
+    public void resetSnake() {
+        kopfZelle.setX((int) ((fieldExtent*extent)/2.0));
+        kopfZelle.setY((int) ((fieldExtent*extent)/2.0));
+        kopfZelle.richtung = Zelle.RIGHT;
+    }
+
+    void moveSnake() {
+        int oldX = kopfZelle.getX();
+        int oldY = kopfZelle.getY();
+        kopfZelle.move();
+        for (int i = 0; i < bodyCnt; i++) {
+            int tempX = snakeBody[i].getX();
+            int tempY = snakeBody[i].getY();
+            snakeBody[i].setX(oldX);
+            snakeBody[i].setY(oldY);
+            oldX = tempX;
+            oldY = tempY;
+        }
+    }
+
+    public Zelle[] snakeBody = new Zelle[(fieldExtent*fieldExtent)-1];
+    public void incSize() {
+
+    }
+
+
     public Scoreboard getScoreboard() {
         return scoreboard;
     }
