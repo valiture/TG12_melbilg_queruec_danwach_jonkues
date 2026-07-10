@@ -7,8 +7,8 @@ public class Spieler {
     public Spieler(String name, String pswd) {
 
     }
-    public boolean checkLogin(String name, String pswd) {
-        return true;
+    public boolean checkLogin(String name, String pswd) {return true;
+
     }
     public int getID() {
         return 0;

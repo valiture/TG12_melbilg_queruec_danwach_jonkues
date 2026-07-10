@@ -1,26 +1,40 @@
+import processing.core.PApplet;
+
 import java.util.Random;
 public class Fruechte {
-    boolean fruchtNichtAufFeld = true;
-    int score;
-    Scoreboard scoreboard;
-    Spielfeld spielfeld;
-    Zelle zelle;
 
-    void fruechte() {
-        Random random = new Random();
+    //boolean fruchtNichtAufFeld = true;
 
-        if (fruchtNichtAufFeld) {
-            int randomX = random.nextInt(10);
-            int randomY = random.nextInt(10);
-            Zelle[][] Frucht = new Zelle[randomX][randomY];
-            //Frucht[randomX][randomY].setFarbe(255, 0, 0);
-            fruchtNichtAufFeld=false;
-            if (zelle.getX() == Frucht[randomX][randomY].getX()
-                    && zelle.getY() == Frucht[randomX][randomY].getY()) {
-                scoreboard.fruitCollected();
-                fruchtNichtAufFeld=true;
-            }
+    private PApplet app;
+    private Spielfeld spielfeld;
+    Random random = new Random();
+
+    public Fruechte(PApplet app, Spielfeld spielfeld) {
+        this.app = app;
+        this.spielfeld = spielfeld;
+    }
+
+    Zelle frucht;
+
+    public void spawnFruit() {
+
+        int randomX = random.nextInt(Spielfeld.fieldExtent);
+        int randomY = random.nextInt(Spielfeld.fieldExtent);
+
+        frucht = new Zelle(
+                app,
+                randomX * Spielfeld.extent,
+                randomY * Spielfeld.extent,
+                Spielfeld.extent,
+                app.color(255, 0, 0));
+    }
+    public void drawFruit() {
+        if (frucht != null) {
+            frucht.drawSquare();
         }
-
+    }
+    public Zelle getFrucht() {
+        return frucht;
     }
 }
+//Daniel->todesscreen schlange

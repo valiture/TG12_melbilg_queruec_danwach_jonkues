@@ -1,7 +1,7 @@
 import processing.core.PApplet;
 
 class Zelle {
-    PApplet app = new PApplet();
+    PApplet app;
     private int x;
     private int y;
     public int extent;
