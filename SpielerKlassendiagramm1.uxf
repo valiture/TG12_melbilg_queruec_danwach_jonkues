@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>400</x>
+      <y>110</y>
+      <w>210</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Scoreboard&gt;&gt;
+--
+-PApplet p
+-int score
+-int highscore
+-int x
+-int y
+-int textSize
+--
++Scoreboard(PApplet p)
++void reset()
++void fruitCollected()
++void draw()
++int getScore()
++int getHighscore()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>140</y>
+      <w>310</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Spieler&gt;&gt;
+--
+-int id
+-String name
+-String pswd
+_-int spielerNr_
+--
++Spieler(String name,String pwsd)
++boolean checkLogin(String name,String pwsd)
++int getID()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>220</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=n           1</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
