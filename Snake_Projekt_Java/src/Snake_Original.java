@@ -10,7 +10,7 @@ public class Snake_Original extends PApplet{
     Spielfeld spielfeld;
     public Buttons[] buttonArray = new Buttons[3];
     int selectedButton = 0;
-    int moveTime = 200;
+    int moveTime = 125;
     int lastMoveTime = 0;
     public void setup() {
         spielfeld = new Spielfeld(this);
@@ -21,7 +21,7 @@ public class Snake_Original extends PApplet{
         buttonArray[1] = settingButton;
         buttonArray[2] = highScoreButton;
     }
-    int size = Spielfeld.extent*12;
+    int size = Spielfeld.extent*Spielfeld.fieldExtent;
     public void settings() {
         size(size, size);
     }
@@ -37,6 +37,7 @@ public class Snake_Original extends PApplet{
         background(0,0,0);
         switch (state) {
             case MENU:
+                spielfeld.resetSnake();
                 background(0);
                 fill(255, 255, 255);
                 textSize(100);
@@ -44,7 +45,9 @@ public class Snake_Original extends PApplet{
                 buttonArray[selectedButton].drawButton(buttonArray[selectedButton].getText());
                 break;
             case PLAYING:
-                spielfeld.generateField();
+                float t = (millis() - lastMoveTime) / (float) moveTime;
+                t = constrain(t, 0, 1);
+                spielfeld.generateField(t);
                 spielfeld.getScoreboard().draw();
                 if (millis() - lastMoveTime >= moveTime) {
                         checkVerloren();
@@ -77,9 +80,13 @@ public class Snake_Original extends PApplet{
         }
     }
     public void changeDirection(int richtung, int opposite) {
+        if (spielfeld.dirChange) {
+            return;
+        }
         if (spielfeld.kopfZelle.lastRichtung != opposite) {
             spielfeld.kopfZelle.lastRichtung = richtung;
             spielfeld.kopfZelle.setRichtung(richtung);
+            spielfeld.dirChange = true;
         }
     }
     public void menuControlRight() {
@@ -139,6 +146,9 @@ public class Snake_Original extends PApplet{
             if (state == GameState.GAMEOVER) {
                 state = GameState.MENU;
             }
+        }
+        if (key == 'r') {
+            state = GameState.MENU;
         }
     }
 

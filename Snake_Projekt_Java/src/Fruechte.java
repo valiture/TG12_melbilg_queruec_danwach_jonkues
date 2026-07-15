@@ -8,6 +8,8 @@ public class Fruechte {
     private PApplet app;
     private Spielfeld spielfeld;
     Random random = new Random();
+    int randomY;
+    int randomX;
 
     public Fruechte(PApplet app, Spielfeld spielfeld) {
         this.app = app;
@@ -18,9 +20,9 @@ public class Fruechte {
 
     public void spawnFruit() {
 
-        int randomX = random.nextInt(Spielfeld.fieldExtent);
-        int randomY = random.nextInt(Spielfeld.fieldExtent);
-
+        randomX = random.nextInt(Spielfeld.fieldExtent);
+        randomY = random.nextInt(Spielfeld.fieldExtent);
+        checkLocation();
         frucht = new Zelle(
                 app,
                 randomX * Spielfeld.extent,
@@ -36,5 +38,17 @@ public class Fruechte {
     public Zelle getFrucht() {
         return frucht;
     }
+    public void checkLocation() {
+        for (int i = 0; i < spielfeld.bodyCnt; i++) {
+            if (randomX == spielfeld.snakeBody[i].getX() && randomY == spielfeld.snakeBody[i].getY()) {
+                randomX = random.nextInt(Spielfeld.extent);
+                randomY = random.nextInt(Spielfeld.extent);
+                frucht.setX(randomX * Spielfeld.extent);
+                frucht.setY(randomY * Spielfeld.extent);
+            }
+        }
+    }
+
 }
 //Daniel->todesscreen schlange
+//^ imptotent

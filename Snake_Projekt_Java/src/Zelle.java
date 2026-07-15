@@ -4,6 +4,8 @@ class Zelle {
     PApplet app;
     private int x;
     private int y;
+    int oldX;
+    int oldY;
     public int extent;
     private int farbe;
     public static final int UP = 0;
@@ -17,6 +19,8 @@ class Zelle {
         this.app = app;
         this.x = x;
         this.y = y;
+        oldX = x;
+        oldY = y;
         this.extent = extent;
         this.farbe = farbe;
     }
@@ -35,6 +39,12 @@ class Zelle {
     void drawSquare() {
         app.fill(farbe);
         app.square(x,y,extent);
+    }
+    public void drawSquare(float t) {
+        float drawX = app.lerp(oldX, x, t);
+        float drawY = app.lerp(oldY, y, t);
+        app.fill(farbe);
+        app.rect(drawX, drawY, extent, extent);
     }
 
     public void setRichtung(int richtung) {
@@ -59,6 +69,9 @@ class Zelle {
                 x += extent;
                 break;
         }
+    }
+    void changeColor(int farbe) {
+        this.farbe = farbe;
     }
 
 

@@ -1,20 +1,22 @@
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Spielfeld {
     public PApplet app;
     private int breite;
     private int hoehe;
-    public static final int extent = 60;
-    public static final int fieldExtent = 12;
+    public static final int extent = 50;
+    public static final int fieldExtent = 18; // nur gerade zahlen
     public int DARK_G; //
     public int LIGHT_G;  //app.color(170, 215, 81);
     public int kopfZelle_color; //app.color(110, 103, 103);
     int body_Color;
     private Fruechte fruechte;
     private Scoreboard scoreboard;
+    public boolean dirChange = false;
     int bodyCnt;
 
 
@@ -25,6 +27,7 @@ public class Spielfeld {
         System.out.println(extent);
         this.app = app;
         DARK_G = app.color(162, 209, 73);
+        LIGHT_G = app.color(170, 215, 81);
         kopfZelle_color = app.color(110,103,103);
         body_Color = app.color(145, 137, 137);
         kopfZelle = new Zelle(app, (int) ((fieldExtent*extent)/2.0), (int) ((fieldExtent*extent)/2.0), extent, kopfZelle_color);
@@ -49,20 +52,30 @@ public class Spielfeld {
     public int getHoehe() {return hoehe;}
 
     Zelle[][] zellArray = new Zelle[fieldExtent][fieldExtent];
-    void generateField() {
+    void generateField(float t) {
+        colorField();
         for (int i = 0; i < fieldExtent; i++) {
             for (int j = 0; j < fieldExtent; j++) {
                 app.rectMode(PConstants.CORNER);
+                app.noStroke();
                 zellArray[j][i].drawSquare();
-
             }
         }
-        kopfZelle.drawSquare();
+        app.stroke(0,0,0);
+        kopfZelle.drawSquare(t);
         for (int i = 0; i < bodyCnt; i++) {
-            snakeBody[i].drawSquare();
+            snakeBody[i].drawSquare(t);
         }
-
         fruechte.drawFruit();
+    }
+    void colorField() {
+        for (int i = 0; i < Spielfeld.fieldExtent; i++) {
+            for (int j = 0; j < Spielfeld.fieldExtent; j++) {
+                if ((i+j) % 2 == 0) {
+                    zellArray[j][i].changeColor(LIGHT_G);
+                }
+            }
+        }
     }
     public void resetSnake() {
         kopfZelle.setX((int) ((fieldExtent*extent)/2.0));
@@ -85,6 +98,13 @@ public class Spielfeld {
     }
 
     void moveSnake() {
+        dirChange = false;
+        kopfZelle.oldX = kopfZelle.getX();
+        kopfZelle.oldY = kopfZelle.getY();
+        for (int i = 0; i < bodyCnt; i++) {
+            snakeBody[i].oldX = snakeBody[i].getX();
+            snakeBody[i].oldY = snakeBody[i].getY();
+        }
         int oldX = kopfZelle.getX();
         int oldY = kopfZelle.getY();
         kopfZelle.move();
@@ -96,9 +116,7 @@ public class Spielfeld {
             oldX = tempX;
             oldY = tempY;
         }
-
-        if (kopfZelle.getX() == fruechte.getFrucht().getX()
-                && kopfZelle.getY() == fruechte.getFrucht().getY()) {
+        if (kopfZelle.getX() == fruechte.getFrucht().getX() && kopfZelle.getY() == fruechte.getFrucht().getY()) {
             incSize();
             scoreboard.fruitCollected();
             fruechte.spawnFruit();
@@ -111,8 +129,6 @@ public class Spielfeld {
         snakeBody[bodyCnt] = new Zelle(app, kopfZelle.getX()-(bodyCnt+1), kopfZelle.getY(), extent, body_Color);
         bodyCnt++;
     }
-
-
     public Scoreboard getScoreboard() {
         return scoreboard;
     }
