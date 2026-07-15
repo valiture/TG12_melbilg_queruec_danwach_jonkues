@@ -9,13 +9,14 @@ public class Spielfeld {
     private int breite;
     private int hoehe;
     public static final int extent = 50;
-    public static final int fieldExtent = 18; // nur gerade zahlen
+    public static final int fieldExtent = 10; // nur gerade zahlen
     public int DARK_G; //
     public int LIGHT_G;  //app.color(170, 215, 81);
     public int kopfZelle_color; //app.color(110, 103, 103);
     int body_Color;
     private Fruechte fruechte;
     private Scoreboard scoreboard;
+    int nextRichtung = Zelle.RIGHT;
     public boolean dirChange = false;
     int bodyCnt;
 
@@ -34,8 +35,9 @@ public class Spielfeld {
 
         scoreboard = new Scoreboard(app);
         bodyCnt = 2;
+
         for(int i = 0; i < bodyCnt; i++) {
-            snakeBody[i] = new Zelle(app, (kopfZelle.getX()-extent*i+1), kopfZelle.getY(), extent, body_Color);
+            snakeBody[i] = new Zelle(app, (kopfZelle.getX()-extent*(i+1)), kopfZelle.getY(), extent, body_Color);
         }
         for(int i = 0; i < fieldExtent; i++) {
             for(int j = 0; j < fieldExtent; j++) {
@@ -62,9 +64,13 @@ public class Spielfeld {
             }
         }
         app.stroke(0,0,0);
-        kopfZelle.drawSquare(t);
-        for (int i = 0; i < bodyCnt; i++) {
-            snakeBody[i].drawSquare(t);
+        kopfZelle.drawSquare();
+        //bewegungsanimationen
+        //kopfZelle.drawSquare(t);
+        snakeBody[0].drawSquare();
+        //snakeBody[0].drawSquare(t);
+        for (int i = 1; i < bodyCnt; i++) {
+            snakeBody[i].drawSquare();
         }
         fruechte.drawFruit();
     }
@@ -78,6 +84,7 @@ public class Spielfeld {
         }
     }
     public void resetSnake() {
+        nextRichtung = Zelle.RIGHT;
         kopfZelle.setX((int) ((fieldExtent*extent)/2.0));
         kopfZelle.setY((int) ((fieldExtent*extent)/2.0));
         kopfZelle.richtung = Zelle.RIGHT;
@@ -96,8 +103,22 @@ public class Spielfeld {
                 body_Color);
         fruechte.spawnFruit();
     }
-
+    int oppositeDirection(int dir) {
+        switch(dir) {
+            case Zelle.UP:
+                return Zelle.DOWN;
+            case Zelle.DOWN:
+                return Zelle.UP;
+            case Zelle.LEFT:
+                return Zelle.RIGHT;
+            case Zelle.RIGHT:
+                return Zelle.LEFT;
+        }
+        return 0;
+    }
     void moveSnake() {
+        kopfZelle.setRichtung(nextRichtung);
+        kopfZelle.lastRichtung = nextRichtung;
         dirChange = false;
         kopfZelle.oldX = kopfZelle.getX();
         kopfZelle.oldY = kopfZelle.getY();
@@ -125,7 +146,7 @@ public class Spielfeld {
 
     public Zelle[] snakeBody = new Zelle[(fieldExtent*fieldExtent)-1];
     public void incSize() {
-        System.out.println("test!");
+        //System.out.println("test!"); // testen
         snakeBody[bodyCnt] = new Zelle(app, kopfZelle.getX()-(bodyCnt+1), kopfZelle.getY(), extent, body_Color);
         bodyCnt++;
     }

@@ -19,16 +19,14 @@ public class Fruechte {
     Zelle frucht;
 
     public void spawnFruit() {
-
-        randomX = random.nextInt(Spielfeld.fieldExtent);
-        randomY = random.nextInt(Spielfeld.fieldExtent);
         checkLocation();
         frucht = new Zelle(
                 app,
                 randomX * Spielfeld.extent,
                 randomY * Spielfeld.extent,
                 Spielfeld.extent,
-                app.color(255, 0, 0));
+                app.color(255,0,0)
+        );
     }
     public void drawFruit() {
         if (frucht != null) {
@@ -39,14 +37,24 @@ public class Fruechte {
         return frucht;
     }
     public void checkLocation() {
-        for (int i = 0; i < spielfeld.bodyCnt; i++) {
-            if (randomX == spielfeld.snakeBody[i].getX() && randomY == spielfeld.snakeBody[i].getY()) {
-                randomX = random.nextInt(Spielfeld.extent);
-                randomY = random.nextInt(Spielfeld.extent);
-                frucht.setX(randomX * Spielfeld.extent);
-                frucht.setY(randomY * Spielfeld.extent);
+        boolean occupied;
+        do {
+            occupied = false;
+            randomX = random.nextInt(Spielfeld.fieldExtent);
+            randomY = random.nextInt(Spielfeld.fieldExtent);
+            for (int i = 0; i < spielfeld.bodyCnt; i++) {
+                if (randomX * Spielfeld.extent == spielfeld.snakeBody[i].getX() && randomY * Spielfeld.extent == spielfeld.snakeBody[i].getY()) {
+                    occupied = true;
+                    break;
+                }
             }
-        }
+            if (randomX * Spielfeld.extent == spielfeld.kopfZelle.getX() &&
+                    randomY * Spielfeld.extent == spielfeld.kopfZelle.getY()) {
+
+                occupied = true;
+            }
+
+        } while (occupied);
     }
 
 }

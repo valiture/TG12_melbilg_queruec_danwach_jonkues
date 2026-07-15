@@ -10,7 +10,7 @@ public class Snake_Original extends PApplet{
     Spielfeld spielfeld;
     public Buttons[] buttonArray = new Buttons[3];
     int selectedButton = 0;
-    int moveTime = 125;
+    int moveTime = 150;
     int lastMoveTime = 0;
     public void setup() {
         spielfeld = new Spielfeld(this);
@@ -32,7 +32,7 @@ public class Snake_Original extends PApplet{
             GAMEOVER
     }
     GameState state = GameState.MENU;
-
+    boolean hasStarted = false;
     public void draw() {
         background(0,0,0);
         switch (state) {
@@ -45,14 +45,25 @@ public class Snake_Original extends PApplet{
                 buttonArray[selectedButton].drawButton(buttonArray[selectedButton].getText());
                 break;
             case PLAYING:
+                /*
+                experimente für animierte bewegung mithilfe von lerp()
+                problematisch bei 90 grad drehungen da es diagonal gezogen wird
+                 */
                 float t = (millis() - lastMoveTime) / (float) moveTime;
                 t = constrain(t, 0, 1);
                 spielfeld.generateField(t);
                 spielfeld.getScoreboard().draw();
-                if (millis() - lastMoveTime >= moveTime) {
+                if (hasStarted) {
+                    if (millis() - lastMoveTime >= moveTime) {
                         checkVerloren();
                         spielfeld.moveSnake();
                         lastMoveTime = millis();
+                    }
+                } else {
+                    textAlign(CENTER);
+                    textSize(30);
+                    text("Press any direction to begin!", size/2, (size/2)-Spielfeld.extent);
+
                 }
                 break;
             case GAMEOVER:
@@ -80,15 +91,13 @@ public class Snake_Original extends PApplet{
         }
     }
     public void changeDirection(int richtung, int opposite) {
-        if (spielfeld.dirChange) {
-            return;
-        }
+        hasStarted = true;
         if (spielfeld.kopfZelle.lastRichtung != opposite) {
-            spielfeld.kopfZelle.lastRichtung = richtung;
-            spielfeld.kopfZelle.setRichtung(richtung);
-            spielfeld.dirChange = true;
+            spielfeld.nextRichtung = richtung;
         }
     }
+
+
     public void menuControlRight() {
         if (selectedButton < buttonArray.length-1) selectedButton++;
         else selectedButton = 0;
@@ -101,7 +110,7 @@ public class Snake_Original extends PApplet{
         if (key == CODED) {
             if(keyCode == UP) {
                  if (state == GameState.PLAYING && spielfeld.kopfZelle.lastRichtung != Zelle.DOWN){
-                    changeDirection(Zelle.UP, Zelle.DOWN);
+                     changeDirection(Zelle.UP, Zelle.DOWN);
                 }
                  if (state == GameState.MENU) {
                      System.out.println("wip");
@@ -138,6 +147,7 @@ public class Snake_Original extends PApplet{
             if (state == GameState.MENU) {
                 if (selectedButton == 0) {
                     spielfeld.getScoreboard().reset();
+                    hasStarted = false;
                     state = GameState.PLAYING;
                 } else {
                     System.out.println("WIP");
@@ -148,10 +158,9 @@ public class Snake_Original extends PApplet{
             }
         }
         if (key == 'r') {
+            hasStarted = false;
             state = GameState.MENU;
         }
     }
-
-
 }
 
