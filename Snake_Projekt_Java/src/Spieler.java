@@ -1,18 +1,19 @@
 public class Spieler {
     private int id;
     private String name;
-    private String pswd;
     static private int spielerNr;
 
-    public Spieler(String name, String pswd) {
-
+    public Spieler(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
-    public boolean checkLogin(String name, String pswd) {return true;
 
-    }
     public int getID() {
-        return 0;
+        return id;
     }
 
+    public String getName() {
+        return name;
+    }
 }
 

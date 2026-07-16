@@ -1,15 +1,12 @@
 import processing.core.PApplet;
 import processing.core.PConstants;
 
-import java.util.Arrays;
-import java.util.Random;
-
 public class Spielfeld {
     public PApplet app;
     private int breite;
     private int hoehe;
-    public static final int extent = 50;
-    public static final int fieldExtent = 10; // nur gerade zahlen
+    public static int extent = 50;
+    public static int fieldExtent = 10; // nur gerade zahlen
     public int DARK_G; //
     public int LIGHT_G;  //app.color(170, 215, 81);
     public int kopfZelle_color; //app.color(110, 103, 103);

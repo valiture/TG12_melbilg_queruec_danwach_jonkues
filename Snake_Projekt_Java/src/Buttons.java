@@ -3,8 +3,8 @@ import processing.core.PConstants;
 
 public class Buttons {
     PApplet app;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     private int width;
     private int height;
     private String text;
@@ -32,5 +32,10 @@ public class Buttons {
 
     public String getText() {
         return text;
+    }
+
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 }
